@@ -9,7 +9,7 @@ pipelineJob('Todo') {
                     branch('*/master')
                 }
             }
-            lightweight()
+            lightweight(true)
         }
     }
 }
