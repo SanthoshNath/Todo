@@ -1,4 +1,4 @@
-pipelineJob('Todo') {
+pipelineJob('Todo/todo') {
     definition {
         cpsScm {
             scm {
