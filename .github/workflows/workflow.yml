@@ -26,3 +26,6 @@ jobs:
       
     - name: Push Docker image
       run: docker push santhoshnath/todo
+      
+    - name: Docker logout
+      run: docker logout
