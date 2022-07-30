@@ -1,4 +1,4 @@
-name: Docker Image
+name: Todo
 
 on:
   push:
@@ -14,5 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
     - name: Build Docker image
       run: docker build . --file Dockerfile --tag todo
