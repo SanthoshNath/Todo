@@ -28,9 +28,14 @@ Dockerfile
 # Git
 .git
 .gitignore
+.github
 
 # Kubernetes
 kubernetes.yaml
+
+# Jenkins
+Jenkinsfile
+Jenkins.groovy
 
 # Script
 apply.sh
