@@ -18,6 +18,11 @@ jobs:
     - name: Build Docker image
       run: docker build . --file Dockerfile --tag santhoshnath/todo
       
+  Publish:
+
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Docker login
       env:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
