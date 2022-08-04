@@ -31,15 +31,3 @@ jobs:
       run: |
         docker rmi santhoshnath/todo
         docker logout
-        
-  Deploy:
-  
-    runs-on: ubuntu-latest
-    environment: PROD
-    needs: Build
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Deploy to Kubernetes
-      run: kubectl apply -f kubernetes.yaml
