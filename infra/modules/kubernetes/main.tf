@@ -1,16 +1,18 @@
-resource "kubernetes_service" "service" {
+resource "kubernetes_service" "node_service" {
   metadata {
-    name = "todo-service"
+    name = var.service_name
   }
   spec {
-    selector = {
-      app = "todo-pod"
-    }
-    port {
-      protocol    = "TCP"
-      port        = 3000
-      target_port = 80
-      node_port   = 32585
+    selector = var.service_selector
+    dynamic "port" {
+      for_each = var.service_port
+
+      content {
+        protocol    = port.value["protocol"]
+        port        = port.value["port"]
+        target_port = port.value["target_port"]
+        node_port   = port.value["node_port"]
+      }
     }
     type = "NodePort"
   }
@@ -18,28 +20,28 @@ resource "kubernetes_service" "service" {
 
 resource "kubernetes_deployment" "deployment" {
   metadata {
-    name = "todo-deployment"
+    name = var.deployment_name
   }
 
   spec {
-    replicas = 2
+    replicas = var.deployment_replicas
     selector {
-      match_labels = {
-        app = "todo-pod"
-      }
+      match_labels = var.deployment_labels
     }
     template {
       metadata {
-        labels = {
-          app = "todo-pod"
-        }
+        labels = var.deployment_labels
       }
       spec {
         container {
-          image = "santhoshnath/todo"
-          name  = "todo"
-          port {
-            container_port = 80
+          image = var.deployment_container_image
+          name  = var.deployment_container_name
+          dynamic "port" {
+            for_each = var.deployment_container_port
+
+            content {
+              container_port = port.value
+            }
           }
         }
       }
