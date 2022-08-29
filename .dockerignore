@@ -33,7 +33,3 @@ Dockerfile
 
 # Terraform
 infra
-
-# Jenkins
-Jenkinsfile
-Jenkins.groovy
