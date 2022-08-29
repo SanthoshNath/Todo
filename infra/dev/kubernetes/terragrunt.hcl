@@ -4,7 +4,7 @@ include "root" {
 }
 
 terraform {
-  source = "${path_relative_from_include("root")}/modules/kubernetes"
+  source = "${path_relative_from_include("root")}/modules//kubernetes"
 }
 
 inputs = {
