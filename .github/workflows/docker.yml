@@ -2,11 +2,11 @@ name: Docker
 
 on:
   push:
-    branches: [ "master" ]
-    paths: [ '!infra/**' ]
+    branches: [ 'master' ]
+    paths-ignore: [ 'infra/**' ]
   pull_request:
-    branches: [ "master" ]
-    paths: [ '!infra/**' ]
+    branches: [ 'master' ]
+    paths-ignore: [ 'infra/**' ]
 
 jobs:
   Build:
