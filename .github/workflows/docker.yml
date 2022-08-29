@@ -1,17 +1,16 @@
-name: Todo
+name: Docker
 
 on:
   push:
     branches: [ "master" ]
+    paths: [ '!infra/**' ]
   pull_request:
     branches: [ "master" ]
+    paths: [ '!infra/**' ]
 
 jobs:
-
   Build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     
@@ -31,18 +30,3 @@ jobs:
       run: |
         docker rmi santhoshnath/todo
         docker logout
-        
-  Plan:
-
-    runs-on: ubuntu-latest
-    needs: Build
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Install dependencies
-      run: brew install terragrunt
-    
-    - name: Terraform plan
-      working-directory: ./infra/dev
-      run: terragrunt run-all plan --terragrunt-non-interactive
