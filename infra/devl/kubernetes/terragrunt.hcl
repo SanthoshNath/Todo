@@ -8,9 +8,9 @@ terraform {
 }
 
 inputs = {
-  service_name = "todo-service"
+  service_name = "todo-service-${include.root.locals.environment_vars.locals.environment}"
   service_selector = {
-    app = "todo-pod"
+    app = "todo-pod-${include.root.locals.environment_vars.locals.environment}"
   }
   service_port = [
     {
@@ -21,13 +21,13 @@ inputs = {
     }
   ]
 
-  deployment_name     = "todo-deployment"
+  deployment_name     = "todo-deployment-${include.root.locals.environment_vars.locals.environment}"
   deployment_replicas = 2
   deployment_labels = {
-    app = "todo-pod"
+    app = "todo-pod-${include.root.locals.environment_vars.locals.environment}"
   }
   deployment_container_image = "santhoshnath/todo"
-  deployment_container_name  = "todo"
+  deployment_container_name  = "todo-${include.root.locals.environment_vars.locals.environment}"
   deployment_container_port = [
     80
   ]
