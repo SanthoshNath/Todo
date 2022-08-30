@@ -26,7 +26,8 @@ jobs:
       - name: Publish Docker image
         run: docker push santhoshnath/todo
 
-      - name: Cleanup
+      - name: Post Build
+        if: ${{ always() }}
         run: |
           docker rmi santhoshnath/todo
           docker logout
