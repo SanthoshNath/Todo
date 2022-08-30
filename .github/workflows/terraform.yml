@@ -7,10 +7,17 @@ on:
   pull_request:
     branches: [ "master" ]
     paths: [ 'infra/**' ]
+  workflow_dispatch:
+    environment:
+      description: 'Environment'
+      type: environment
+      required: true
 
 jobs:
-  Plan:
+  DEVL:
     runs-on: ubuntu-latest
+    environment: DEVL
+    if: inputs.environment == 'DEVL'
     steps:
       - uses: actions/checkout@v3
 
@@ -18,5 +25,19 @@ jobs:
         run: brew install terragrunt
 
       - name: Terraform plan
-        working-directory: ./infra/dev
+        working-directory: ./infra/devl
+        run: terragrunt run-all plan --terragrunt-non-interactive
+
+  PROD:
+    runs-on: ubuntu-latest
+    environment: PROD
+    if: inputs.environment == 'PROD'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: brew install terragrunt
+
+      - name: Terraform plan
+        working-directory: ./infra/prod
         run: terragrunt run-all plan --terragrunt-non-interactive
