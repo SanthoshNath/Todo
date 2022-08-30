@@ -3,15 +3,16 @@ name: Terraform
 on:
   push:
     branches: [ "master" ]
-    paths: [ 'infra/**' ]
+    paths: [ 'infra/**', '.github/workflows/terraform.yml', '!README.md' ]
   pull_request:
     branches: [ "master" ]
-    paths: [ 'infra/**' ]
+    paths: [ 'infra/**', '.github/workflows/terraform.yml', '!README.md' ]
   workflow_dispatch:
-    environment:
-      description: 'Environment'
-      type: environment
-      required: true
+    inputs:
+      environment:
+        description: 'Environment'
+        type: environment
+        required: true
 
 jobs:
   DEVL:

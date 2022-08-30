@@ -3,30 +3,30 @@ name: Docker
 on:
   push:
     branches: [ 'master' ]
-    paths-ignore: [ 'infra/**', 'README.md' ]
+    paths-ignore: [ 'infra/**', '.github/workflows/terraform.yml', 'README.md' ]
   pull_request:
     branches: [ 'master' ]
-    paths-ignore: [ 'infra/**', 'README.md' ]
+    paths-ignore: [ 'infra/**', '.github/workflows/terraform.yml', 'README.md' ]
 
 jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Build Docker image
-      run: docker build . --file Dockerfile --tag santhoshnath/todo
+      - uses: actions/checkout@v3
 
-    - name: Docker login
-      env:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      run: echo "$password" | docker login --username "$username" --password-stdin
-      
-    - name: Publish Docker image
-      run: docker push santhoshnath/todo
-      
-    - name: Cleanup
-      run: |
-        docker rmi santhoshnath/todo
-        docker logout
+      - name: Build Docker image
+        run: docker build . --file Dockerfile --tag santhoshnath/todo
+
+      - name: Docker login
+        env:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: echo "$password" | docker login --username "$username" --password-stdin
+
+      - name: Publish Docker image
+        run: docker push santhoshnath/todo
+
+      - name: Cleanup
+        run: |
+          docker rmi santhoshnath/todo
+          docker logout
