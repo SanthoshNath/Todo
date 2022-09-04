@@ -5,6 +5,7 @@ on:
     branches: [ "master" ]
     paths: [ 'infra/**', '.github/workflows/terraform.yml', '!README.md' ]
   pull_request:
+    types: [ opened, edited, closed, reopened ]
     branches: [ "master" ]
     paths: [ 'infra/**', '.github/workflows/terraform.yml', '!README.md' ]
   workflow_dispatch:
