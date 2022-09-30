@@ -19,8 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: brew install terragrunt
+      - uses: SanthoshNath/setup-terragrunt@v1
 
       - name: Terraform plan
         working-directory: ./infra/devl
@@ -33,8 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: brew install terragrunt
+      - uses: SanthoshNath/setup-terragrunt@v1
 
       - name: Terraform plan
         working-directory: ./infra/prod
