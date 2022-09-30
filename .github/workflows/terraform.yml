@@ -2,40 +2,42 @@ name: Terraform
 
 on:
   push:
-    branches: [ "master" ]
-    paths: [ 'infra/**', '.github/workflows/terraform.yml', '!README.md' ]
+    paths:
+      - "infra/**"
+      - ".github/workflows/terraform.yml"
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment'
+        description: "Environment"
         type: environment
         required: true
 
+concurrency: ${{ github.workflow }}
+
 jobs:
-  DEVL:
+  Plan:
     runs-on: ubuntu-latest
-    environment: DEVL
-    if: (github.event_name == 'push' || github.event_name == 'pull_request') || inputs.environment == 'DEVL'
+
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: brew install terragrunt
+      - uses: SanthoshNath/setup-terragrunt@v1
 
       - name: Terraform plan
-        working-directory: ./infra/devl
+        working-directory: ${{ github.event_name == 'workflow_dispatch' && format('infra/{0}', inputs.environment) || 'infra/devl' }}
         run: terragrunt run-all plan --terragrunt-non-interactive
 
-  PROD:
+  Apply:
     runs-on: ubuntu-latest
-    environment: PROD
-    if: inputs.environment == 'PROD'
+    environment: ${{ inputs.environment }}
+    needs: Plan
+    if: false
+
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: brew install terragrunt
+      - uses: SanthoshNath/setup-terragrunt@v1
 
       - name: Terraform plan
-        working-directory: ./infra/prod
-        run: terragrunt run-all plan --terragrunt-non-interactive
+        working-directory: ${{ github.event_name == 'workflow_dispatch' && format('infra/{0}', inputs.environment) || 'infra/devl' }}
+        run: terragrunt run-all apply --terragrunt-non-interactive
