@@ -2,8 +2,14 @@ name: Docker
 
 on:
   push:
-    branches: [ 'master' ]
-    paths-ignore: [ 'infra/**', '.github/workflows/terraform.yml', 'README.md' ]
+    branches:
+      - "master"
+    paths-ignore:
+      - "infra/**"
+      - ".github/workflows/terragrunt.yml"
+      - "README.md"
+
+concurrency: ${{ github.workflow }}
 
 jobs:
   Build:

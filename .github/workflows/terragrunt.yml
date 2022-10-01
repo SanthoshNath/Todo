@@ -4,19 +4,17 @@ on:
   push:
     paths:
       - "infra/**"
-      - ".github/workflows/terraform.yml"
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: "Environment"
-        type: environment
-        required: true
+      - ".github/workflows/terragrunt.yml"
 
 concurrency: ${{ github.workflow }}
 
 jobs:
   Plan:
     runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      matrix:
+        environment: [ devl, prod ]
 
     steps:
       - uses: actions/checkout@v3
@@ -24,13 +22,17 @@ jobs:
       - uses: SanthoshNath/setup-terragrunt@v1
 
       - name: Terraform plan
-        working-directory: ${{ github.event_name == 'workflow_dispatch' && format('infra/{0}', inputs.environment) || 'infra/devl' }}
+        working-directory: infra/${{ matrix.environment }}
         run: terragrunt run-all plan --terragrunt-non-interactive
 
   Apply:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     needs: Plan
+    strategy:
+      max-parallel: 1
+      matrix:
+        environment: [ devl, prod ]
     if: false
 
     steps:
@@ -39,5 +41,5 @@ jobs:
       - uses: SanthoshNath/setup-terragrunt@v1
 
       - name: Terraform plan
-        working-directory: ${{ github.event_name == 'workflow_dispatch' && format('infra/{0}', inputs.environment) || 'infra/devl' }}
+        working-directory: infra/${{ matrix.environment }}
         run: terragrunt run-all apply --terragrunt-non-interactive
