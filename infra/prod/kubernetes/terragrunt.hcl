@@ -20,7 +20,6 @@ inputs = {
       node_port   = 32585
     }
   ]
-
   deployment_name     = "todo-deployment-${include.root.locals.environment_vars.locals.environment}"
   deployment_replicas = 3
   deployment_labels = {
@@ -28,7 +27,5 @@ inputs = {
   }
   deployment_container_image = "santhoshnath/todo"
   deployment_container_name  = "todo-${include.root.locals.environment_vars.locals.environment}"
-  deployment_container_port = [
-    80
-  ]
+  deployment_container_port  = [80]
 }
