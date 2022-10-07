@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: SanthoshNath/setup-terragrunt@v1
+      - uses: SanthoshNath/setup-terragrunt@v2
 
       - name: Terraform plan
         working-directory: infra/${{ matrix.environment }}
@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: SanthoshNath/setup-terragrunt@v1
+      - uses: SanthoshNath/setup-terragrunt@v2
 
       - name: Terraform plan
         working-directory: infra/${{ matrix.environment }}
