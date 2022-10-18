@@ -2,6 +2,8 @@ name: Terraform
 
 on:
   push:
+    branches:
+      - "master"
     paths:
       - "infra/**"
       - ".github/workflows/terragrunt.yml"
@@ -27,7 +29,7 @@ jobs:
 
   Apply:
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    environment: ${{ matrix.environment }}
     needs: Plan
     strategy:
       max-parallel: 1
