@@ -1,4 +1,4 @@
-name: Docker
+name: Build
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     paths-ignore:
       - "infra/**"
       - ".github/**.yml"
-      - "!.github/workflows/docker.yml"
+      - "!.github/workflows/build.yml"
       - "**.md"
       - ".gitignore"
 
@@ -16,6 +16,7 @@ concurrency: ${{ github.workflow }}
 jobs:
   Build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
