@@ -63,3 +63,4 @@ terraform.rc
 
 .idea
 *.iml
+scripts/

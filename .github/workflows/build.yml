@@ -10,8 +10,19 @@ on:
       - "!.github/workflows/build.yml"
       - "**.md"
       - ".gitignore"
+      - ".pre-commit-config.yaml"
+  pull_request:
+    branches:
+      - "master"
+    paths-ignore:
+      - "infra/**"
+      - ".github/**.yml"
+      - "!.github/workflows/build.yml"
+      - "**.md"
+      - ".gitignore"
+      - ".pre-commit-config.yaml"
 
-concurrency: ${{ github.workflow }}
+concurrency: build_${{ github.ref }}
 
 jobs:
   Build:
@@ -32,5 +43,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          push: true
+          push: ${{ github.event_name == 'push' && 'true' || 'false' }}
           tags: ghcr.io/santhoshnath/todo
