@@ -6,8 +6,8 @@ generate "provider" {
   path      = "provider.tf"
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
-provider "kubernetes" {
-  config_path = "~/.kube/config"
+provider "aws" {
+  region = "${local.environment_vars.locals.aws_region}"
 }
 EOF
 }
