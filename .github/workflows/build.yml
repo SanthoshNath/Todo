@@ -22,7 +22,7 @@ on:
       - ".gitignore"
       - ".pre-commit-config.yaml"
 
-concurrency: ${{ github.workflow }}
+concurrency: build_${{ github.ref }}
 
 jobs:
   Build:
