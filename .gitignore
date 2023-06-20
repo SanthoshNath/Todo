@@ -57,9 +57,8 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-.terraform.lock.hcl
-
 **/.terragrunt-cache/*
 
 .idea
 *.iml
+scripts/

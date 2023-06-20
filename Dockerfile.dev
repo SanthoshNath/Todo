@@ -1,0 +1,9 @@
+FROM node:lts-alpine
+
+WORKDIR app/
+
+RUN npm install
+
+ENTRYPOINT ["npm"]
+
+CMD ["start"]

@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  todo:
+    container_name: todo
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./package.json:app/package.json
+      - ./package-lock.json:app/package-lock.json
+      - ./src:app/src
+      - ./public:app/public
+      - ./node_modules:app/node_modules
